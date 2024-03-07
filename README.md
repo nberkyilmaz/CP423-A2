@@ -1,282 +1,49 @@
-# Text Retrieval & Search Engine (CP423)
+# Text Processing and Query Handling
 
-### Assignment 2 - Group 6 Submission
+This project contains Python code for advanced text processing, specifically designed for creating and querying a TF-IDF (Term Frequency-Inverse Document Frequency) matrix. It's tailored for applications in information retrieval, text mining, and natural language processing tasks, where the goal is to efficiently search and rank documents based on their relevance to a given query.
 
-## Members:
-- Gadd, Bryan
+## Overview
 
-- Jain, Maheep
+The codebase provides a comprehensive approach to:
 
-- Khamphavong, Osaka
+- Construct a positional index of terms across a collection of documents.
+- Compute document frequencies for each term to understand their distribution across the corpus.
+- Apply various term frequency (TF) weighting schemes to account for term importance within documents.
+- Calculate inverse document frequencies (IDF) to measure how much information each term provides, based on its commonality across all documents.
+- Generate a TF-IDF matrix representing the importance of terms within documents, adjusted for their rarity across the corpus.
+- Query the document set, processing a given text query against the TF-IDF matrix to find and rank documents based on their relevance.
 
-- Simion, Alexandra
+## How It Works
 
-Due Date/Submission Date: July 9th, 2023, 11:59pm
+### Document Processing
 
-## Summary:
-The purpose of this assignment was to create a functioning program to searching up phrase queries in a dataset in Python and then ranking them by using TF-IDF. This involved preprocessing the data, implementing an positional index data structure, taking input from the user, implementing a phrase queries function, testing the code for errors, and running a set of queries that return data from the dataset.
+- **Positional Index Construction**: The system first builds a positional index from the input documents. This index maps each term to its positions within each document, facilitating efficient retrieval and relevance scoring.
+- **Document Frequency Computation**: For each term in the positional index, the document frequency (the number of documents containing the term) is computed. This metric is crucial for the IDF calculation.
 
-## Requirments:
-To run this project you will need to run the following command to install the required modules/libraries:
+### TF-IDF Calculation
 
-pip install -r .\requirements.txt
+- **Term Frequency (TF) Calculation**: The code supports multiple schemes for calculating the term frequency, including binary, raw count, term frequency, log normalization, and double normalization. This flexibility allows for fine-tuning the impact of term frequency on the overall relevance score.
+- **Inverse Document Frequency (IDF) Calculation**: IDF is calculated for each term to diminish the weight of terms that occur very frequently across the documents, hence offering little to no uniqueness or relevance.
+- **TF-IDF Matrix Generation**: A matrix is generated where each row corresponds to a document and each column to a term from the positional index. The matrix cells contain the TF-IDF score, representing the term's importance within a particular document adjusted by its document frequency.
 
-## Summary of files:
-### Q1.
-Contains the positional index data structure along with preprocessing function and phrase queries functions.
-- The positional index structure allows the addition/updating of index's and can print the structure for debugging.
-- The phrase query functions there are two helper functions, we use proximity_position to find positional in the same document, then merge algorithm to combine the docID into one list then give an output.
+### Query Processing
 
-Assumption:
-In phrase queries function we made an assumption that the user want to search for phrase that exist within the documents so the input would take a phrase and then the output would show in format: {docID: [position of the word]} (the position would be in an order because each word needs to be next to each other). If user enter phrase that does not exist in the document it will return empty result. 
+- **Query Vectorization**: The query text is preprocessed and transformed into a vector using the same TF-IDF calculation applied to documents. This allows for comparing the query directly against the document vectors in the TF-IDF matrix.
+- **Cosine Similarity Calculation**: The relevance of each document to the query is determined by calculating the cosine similarity between the document's TF-IDF vector and the query vector. Documents are then ranked based on their similarity scores.
 
-### Q2.
-Contains the TF, TF-IDF, and Cosine similarity functions. Q2 generates the matrix with its appropriate size and fills it with zeros. There's a function to calculate the TF-IDF numbers then populate the existing matrix with those numbers. The query vector is then generated in a separate function. To calculate the tf-idf score we need the tf-idf numbers from the matrix multiplied by the query vector generated (or more specifically the dot product between the two values). There's also another function that returns the top 5 most relevant documents based on the top 5 highest calculated tf-idf scores. The cosine_sim function is similar to the function that returns the top 5 most relevant documents based on tf-idf scores. The only difference is the top 5 values are based off the cosine similarity scores, instead. 
+## Usage Example
 
-Assumption:
-Log is always base 10 for any calculation. 
+An example usage scenario is provided, demonstrating how to read document data, preprocess it, generate a TF-IDF matrix, and query this matrix to retrieve and rank documents based on their relevance to a given query string.
 
-## How to run the program:
-1. Refer to Requirements to install the required libraries.
-2. Run Main.py.
-3. You will be prompted to enter which function you want to run (or exit the program):
-    - 0 = Exit
-    - 1 = Phrase query
-    - 2 = TF-IDF
-    - 3 = Cosine Similatiry
-    - Enter a number and press enter to select the function (or exit the program).
-4. After picking the function you will be prompted to enter the query. Enter the query and press enter.
-5. At this point phrase query will process and output the result. If TF-IDF or Cosine Similatiry was picked then you will be asked to pick which weight scheme to use.
-    - 1 = Binary
-    - 2 = Raw Count
-    - 3 = Term Frequency (NOTE: It will take a few minutes or longer to process this scheme based on the vocabulary size.)
-    - 4 = Log Normalization
-    - 5 = Double Normalization (NOTE: It will take a few minutes or longer to process this scheme based on the vocabulary size.)
-    - Enter a number and press enter to select the weight schemna. Once processed the results are outputed.
-6. Once the selected function outputs its results you will return to step 3 where you can pick another function to run or exit the program.
+## Getting Started
 
-## Program Example:
-### Phrase Query
-Options:
-0 = Exit program
+To use this code for your text processing and querying tasks, you'll need to:
 
-1 = Phrase Query
+1. Ensure you have the necessary Python environment and dependencies set up (e.g., NumPy for matrix operations, NLTK for text preprocessing).
+2. Place your document data in a suitable format for processing.
+3. Adjust the example usage code to point to your data and queries.
+4. Run the script to generate the TF-IDF matrix and query your documents.
 
-2 = TD-IDF
+## Contributing
 
-3 = Cosine
-
-Enter an option: 1
-Enter the query: sherlock holmes
-
-Creating Positional Index for the first time...
-Finished creating Positional Index.
-
-Documents that contain the phrase
-
-Read as { DocId: [Positions of the phrase], ...}
-
-{3: [7664, 7665], 8: [8081, 8082], 53: [1451, 1452], 86: [10331, 10332], 131: [6473, 6474], 206: [10004, 10005]}
-
-### TF-IDF
-Options:
-0 = Exit program
-
-1 = Phrase Query
-
-2 = TD-IDF
-
-3 = Cosine
-
-Enter an option: 2
-
-Enter the query: sherlock holmes
-
-Pick an option for the TF weight scheme:
-
-1 = Binary
-
-2 = Raw count
-
-3 = Term Frequency
-
-4 = Log Normalization
-
-5 = Double Normalization
-
-Enter an option: 1
-
-Creating Positional Index for the first time...
-Finished creating Positional Index.
-
-TF-IDF Result:
-
-Top 5 dopcumets are:
-Document 189
-Document 213
-Document 45
-Document 218
-Document 102
-
-### Cosine Similarity
-Options:
-0 = Exit program
-
-1 = Phrase Query
-
-2 = TD-IDF
-
-3 = Cosine
-
-Enter an option: 3
-
-Enter the query: sherlock holmes
-
-Pick an option for the TF weight scheme:
-
-1 = Binary
-
-2 = Raw count
-
-3 = Term Frequency
-
-4 = Log Normalization
-
-5 = Double Normalization
-
-Enter an option: 1
-
-Creating Positional Index for the first time...
-Finished creating Positional Index.
-
-Cosine Similarity Result:
-
-Top 5 dopcumets are:
-Document 238
-Document 5
-Document 3
-Document 201
-Document 170
-
-## Cosine Similarity Report:
-NOTE/ASSUMPTION: We based the pros and cons on the performance of the scheme as there was no metric mentioned in the assignment outline.
-
-We used the first 48 files from the dataset for this report. The query used was 'sherlock holmes'.
-
-### Binary:
-Pros:
-- Quick to process (simple calculation)
-
-Cons:
-- Didn't notice any cons.
-
-Output:
-TD-IDF Matrix
-[[1.20411998 0.77815125 0.98227123 ... 0.         0.         0.        ]
- [0.         0.         0.         ... 0.         0.         0.        ]
- [0.         0.         0.         ... 0.         0.         0.        ]
- ...
- [0.         0.         0.98227123 ... 0.         0.         0.        ]
- [0.         0.77815125 0.         ... 0.         0.         0.        ]
- [0.         0.         0.         ... 1.38021124 1.38021124 1.38021124]]
-
-Cosine Similarity Result:
-Top 5 dopcumets are:
-Document 5
-Document 3
-Document 10
-Document 14
-Document 41
-
-### Raw Count
-Pros:
-- Quick to process (simple calculation)
-
-Cons:
-- Didn't notice any cons.
-
-Output:
-TD-IDF Matrix
-[[1.20411998 0.77815125 0.98227123 ... 0.         0.         0.        ]
- [0.         0.         0.         ... 0.         0.         0.        ]
- [0.         0.         0.         ... 0.         0.         0.        ]
- ...
- [0.         0.         0.98227123 ... 0.         0.         0.        ]
- [0.         0.77815125 0.         ... 0.         0.         0.        ]
- [0.         0.         0.         ... 1.38021124 1.38021124 1.38021124]]
-
-Cosine Similarity Result:
-Top 5 dopcumets are:
-Document 5
-Document 3
-Document 10
-Document 14
-Document 41
-
-### Term Frequency
-Pros:
-- Didn't notice any pros.
-
-Cons:
-- Process heavy (complex calculation that takes a while)
-
-Output:
-
-TD-IDF Matrix
-[[1.20411998 0.77815125 0.98227123 ... 0.         0.         0.        ]
- [0.         0.         0.         ... 0.         0.         0.        ]
- [0.         0.         0.         ... 0.         0.         0.        ]
- ...
- [0.         0.         0.98227123 ... 0.         0.         0.        ]
- [0.         0.77815125 0.         ... 0.         0.         0.        ]
- [0.         0.         0.         ... 1.38021124 1.38021124 1.38021124]]
-
-Cosine Similarity Result:
-Top 5 dopcumets are:
-Document 5
-Document 3
-Document 10
-Document 14
-Document 41
-
-### Log Normalization
-Pros:
-- Quick to process (simple calculation)
-- Normalized values
-
-Cons:
-- Didn't notice any cons.
-
-Output:
-TD-IDF Matrix
-[[0.36247623 0.23424687 0.29569311 ... 0.         0.         0.        ]
- [0.         0.         0.         ... 0.         0.         0.        ]
- [0.         0.         0.         ... 0.         0.         0.        ]
- ...
- [0.         0.         0.29569311 ... 0.         0.         0.        ]
- [0.         0.23424687 0.         ... 0.         0.         0.        ]
- [0.         0.         0.         ... 0.41548498 0.41548498 0.41548498]]
-
-Cosine Similarity Result:
-Top 5 dopcumets are:
-Document 5
-Document 3
-Document 10
-Document 14
-Document 41
-
-### Double Normalization
-Pros:
-- Didn't notice any pros.
-
-Cons:
-- Process heavy (complex calculation that takes a while)
-
-Output:
-[[1.20411998 0.77815125 0.98227123 ... 0.         0.         0.        ]
- [0.         0.         0.         ... 0.         0.         0.        ]
- [0.         0.         0.         ... 0.         0.         0.        ]
- ...
- [0.         0.         0.98227123 ... 0.         0.         0.        ]
- [0.         0.77815125 0.         ... 0.         0.         0.        ]
- [0.         0.         0.         ... 1.38021124 1.38021124 1.38021124]]
+Your contributions to improve the efficiency, effectiveness, or usability of this project are welcome. Please feel free to submit pull requests or open issues to discuss potential enhancements or fixes.
