@@ -1,7 +1,9 @@
 Text Processing and Query Handling
+
 This project contains Python code for advanced text processing, specifically designed for creating and querying a TF-IDF (Term Frequency-Inverse Document Frequency) matrix. It's tailored for applications in information retrieval, text mining, and natural language processing tasks, where the goal is to efficiently search and rank documents based on their relevance to a given query.
 
 Overview
+
 The codebase provides a comprehensive approach to:
 
 Construct a positional index of terms across a collection of documents.
