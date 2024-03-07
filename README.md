@@ -1,7 +1,9 @@
 Text Processing and Query Handling
 This project contains Python code for advanced text processing, specifically designed for creating and querying a TF-IDF (Term Frequency-Inverse Document Frequency) matrix. It's tailored for applications in information retrieval, text mining, and natural language processing tasks, where the goal is to efficiently search and rank documents based on their relevance to a given query.
+
 Overview
 The codebase provides a comprehensive approach to:
+
 Construct a positional index of terms across a collection of documents.
 Compute document frequencies for each term to understand their distribution across the corpus.
 Apply various term frequency (TF) weighting schemes to account for term importance within documents.
@@ -21,8 +23,10 @@ Query Vectorization: The query text is preprocessed and transformed into a vecto
 Cosine Similarity Calculation: The relevance of each document to the query is determined by calculating the cosine similarity between the document's TF-IDF vector and the query vector. Documents are then ranked based on their similarity scores.
 Usage Example
 An example usage scenario is provided, demonstrating how to read document data, preprocess it, generate a TF-IDF matrix, and query this matrix to retrieve and rank documents based on their relevance to a given query string.
+
 Getting Started
 To use this code for your text processing and querying tasks, you'll need to:
+
 Ensure you have the necessary Python environment and dependencies set up (e.g., NumPy for matrix operations, NLTK for text preprocessing).
 Place your document data in a suitable format for processing.
 Adjust the example usage code to point to your data and queries.
